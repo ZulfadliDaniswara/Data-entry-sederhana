@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="alert alert-warning" role="alert">
+    Form Tambah Konten
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary">Kirim</button>
+</form>
+
+<div class="alert alert-info mt-4" role="alert">
+    Daftar Konten yang Dikirim
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email Pengguna</th>
+            <th>Artikel</th>
+            <th>Tanggal Dibuat</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for konten in daftar_konten %}
+        <tr>
+            <td>{{ konten.author.email }}</td>
+            <td>{{ konten.artikel }}</td>
+            <td>{{ konten.created_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">Belum ada konten yang ditambahkan.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
